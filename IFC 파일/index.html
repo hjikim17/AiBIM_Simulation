@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="jquery.js"></script>
+    <script src="bundle.js"></script>
+    <script src="/component.js"></script>
+</head>
+<body>
+    <a-scene cursor="rayOrigin: mouse">
+        <a-camera>
+            <!-- 버튼 엔티티 추가 -->
+            <a-box position="0 -3 -5" color="red" id="toggleButton" clickable show></a-box>
+        </a-camera>
+
+        <!-- 기존 큐브 엔티티 유지 -->
+        <a-box position="0 0 -10" color="blue" class="cube" visible="true"></a-box>
+        <a-entity id="ifc"></a-entity>
+
+    </a-scene>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <script>
+
+    const ifcModels = [];
+    const ifcLoader = new IFCLoader();
+    let scene = $("#ifc")[0].object3D;
+
+
+
+        ifcLoader.ifcManager.setWasmPath("../../../");
+        ifcLoader.load("KBIMS2x3.ifc", async (ifcModel) => {
+        ifcModels.push(ifcModel);
+        scene.add(ifcModels);
+  });
+    </script>
+</body>
+</html>
